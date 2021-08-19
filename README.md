@@ -37,6 +37,8 @@ The dataset was split into training and testing data using the `train_test_split
 ### Compiling, Training, and Evaluating our model
 To evalutate our models we used `binary_crossentropy` for loss and `adam` optimizer evaluated by accuracy score based on the test data.
 
+---
+
 #### Initial Model
 We started by basic parameters for a deep learning model to gauge a starting point for optimizing. We used the ReLU activation function for both initial dense layers which is ideal for looking at positive nonlinear input data for classification. We used the sigmoid function for the output layer as it outputs a probability of 0 to 1. We used a high level of neurons so the model will train quuickly within 50 epochs.
 
@@ -48,8 +50,8 @@ We started by basic parameters for a deep learning model to gauge a starting poi
     - Output layer | 1 neuron | Sigmoid
 
 **Picture 1.1: First Deep Learning Model**
-**** insert initial keras model ****
 
+![Initial Deep Learning Model](https://github.com/joshuanallen/Neural_Network_Charity_Analysis/blob/38c71ab35d3790566976a56dde4786e63bf3dd14/images/initial_keras_model.png)
 
 **Training**
 - Number of epochs: 50
@@ -64,12 +66,14 @@ This model **FAILED** to reach our goal accuracy threshold of 75%.
 **Next steps**
 In the next model, we are going to use the Keras optimizer to give us an idea of what the best model design is for the current feature variables.
 
+---
 
 #### First model optimization
 For our first model improvement we used an Bayesian optimization function to tune our model using twenty models that test number of layers, nodes, and test the use of four different activation functions for our hidden layers (sigmoid, tanh, ReLU, and Leaky ReLU) to find a "better" model than our original. The function then picks the parameters for its highest scoring results based on accuracy. You can see the optimized output in Picture 2.1.
 
 **Picture 2.1: Keras model optimizer function results**
-**** insert keras tuner image here ****
+
+![Keras model optimizer function results](https://github.com/joshuanallen/Neural_Network_Charity_Analysis/blob/38c71ab35d3790566976a56dde4786e63bf3dd14/images/Keras_optimizer_output_best_model.png)
 
 We then set these as our model parameters to test against our initial model performance.
 
@@ -83,8 +87,9 @@ We then set these as our model parameters to test against our initial model perf
     - Dense layer #5 |  9 neurons | Leaky ReLU
     - Output layer | 1 neuron | Sigmoid
 
-**Picture 2.1: Optimized model v1**
-**** insert optimized model v1 ****
+**Picture 2.2: Optimized model v1**
+
+![Optimized model v1](https://github.com/joshuanallen/Neural_Network_Charity_Analysis/blob/38c71ab35d3790566976a56dde4786e63bf3dd14/images/model_optimization_v1.png)
 
 
 **Training**
@@ -104,6 +109,8 @@ In our next model we attempted a single layer neural network and remove some of 
  - `SPECIAL_CONSIDERATIONS`: identify unique cases, but may not have bearing on success
  - `INCOME_AMT`: Showing the value counts, there is a significant number of "0"s implying the data may not be comprehensive and could add unneccessary variance
 
+---
+
 #### Second model optimization
 For this optimization test, we removed some feature variables deemed less important to the prediction model based on their description. We also reverted our activation function back to the basic ReLU function in order to set similar parameters to our initial model. Additionally, we reduced the overall complexity of the model layers as the the first optimization attempt did not improve the model's accuracy.
 
@@ -114,7 +121,8 @@ For this optimization test, we removed some feature variables deemed less import
     - Output layer | 1 neuron | Sigmoid
 
 **Picture 3.1: Optimized model v2**
-**** insert optimized model v2 ****
+
+![Optimized model v2](https://github.com/joshuanallen/Neural_Network_Charity_Analysis/blob/38c71ab35d3790566976a56dde4786e63bf3dd14/images/model_optimization_v2.png)
 
 
 **Training**
@@ -131,6 +139,7 @@ This model **FAILED** to reach our goal accuracy threshold of 75%. It also faile
 **Next steps**
 Our next steps, were to reintroduce the `INCOME_AMT` feature variable to the dataset as it may provide some boost to accuracy even if the data may be not fully correct. We also added an additional dense layer to the model and attempted to clean up some of the feature variable datasets through binning.
 
+---
 
 #### Third optimization model
 For this optimization test, we reducedthe variance in `USE_CASE` feature variable to bucket less frequent values. We also manually created logarithmicesque bins for the `ASK_AMT` feature variable as the numbers we're skewed towards lower value loans and only a few extremely high value loans existed. We also added additional neurons (more than our first model) and an additional layer with a different activation function than the first dense layer (from the previous optimization attempt) because our simple model from our last optimization attempt did not improve performance.
@@ -143,8 +152,8 @@ For this optimization test, we reducedthe variance in `USE_CASE` feature variabl
     - Output layer | 1 neuron | Sigmoid
 
 **Picture 4.1: Optimized model v3**
-**** insert optimized model v3 ****
 
+![Optimized model v3](https://github.com/joshuanallen/Neural_Network_Charity_Analysis/blob/38c71ab35d3790566976a56dde4786e63bf3dd14/images/model_optimization_v3.png)
 
 **Training**
 We again ramped up the training epochs to identify a threshold where improvements were starting to wane.
@@ -159,6 +168,8 @@ This model **FAILED** to reach our goal accuracy threshold of 75%. It also faile
 
 **Next steps**
 Reduce number of changes between iterations to understand granular effects of changing parameters and input features.
+
+---
 
 #### Summary of deep learning optimizations
 Our current optimiation efforts failed to *significantly improve* performance from our initial model. There was a slight improvement in one of our models, but not significant. This may be due to the tuning approach of testing mutliple changes within each iteration, therefore failing to specifically identify which changes had the biggest effect on the model's performance. Overall, the Keras Sequential deep learning model was able to perform with an accuracy in the range of 72-74% consistently and has not improved with several changes to the model.
